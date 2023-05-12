@@ -1,0 +1,164 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background: rgb(18, 14, 14);
+        }
+
+        #p1 {
+            height: 80%;
+            width: 45%;
+        }
+
+        .row {
+            display: flex;
+            height: 26.6%;
+            justify-content: space-evenly;
+        }
+
+        .p01:hover,
+        .p02:hover,
+        .p03:hover {
+            background: rgba(109, 93, 93, 0.628);
+        }
+
+        .p01,
+        .p02,
+        .p03 {
+            width: 27%;
+            height: 94%;
+        }
+
+        .hl {
+            width: 100%;
+            transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+        }
+
+        .hv {
+            width: 100%;
+            transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            position: relative;
+        }
+
+        #hv1 {
+            top: 82px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 69px;
+        }
+
+        #hv2 {
+            top: -50px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: -69px;
+        }
+
+        .dot {
+            height: 95px;
+            width: 95px;
+            display: block;
+            border: 11px solid #a6a6a6;
+            border-radius: 102px;
+            box-shadow: 1px 1px 8px 1px #4e4e4e;
+        }
+
+        .close {
+            height: 100px;
+            width: 100px;
+            border-radius: 5px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="p1">
+        <div id="row1" class="row">
+            <div id="p1R1C1" class="p01" onclick="getId(this.id)"></div>
+            <div id="p1R1C2" class="p01" onclick="getId(this.id)"></div>
+            <div id="p13R1C3" class="p01" onclick="getId(this.id)"></div>
+        </div>
+        <hr id="hl1" class="hl">
+        <hr id="hv1" class="hv">
+        <div id="row2" class="row">
+            <div id="p1R2C1" class="p02" onclick="getId(this.id)"></div>
+            <div id="p1R2C2" class="p02" onclick="getId(this.id)"></div>
+            <div id="p13R2C3" class="p02" onclick="getId(this.id)"></div>
+        </div>
+        <hr id="hl2" class="hl">
+        <hr id="hv2" class="hv">
+        <div id="row3" class="row">
+            <div id="p1R3C1" class="p03" onclick="getId(this.id)"></div>
+            <div id="p1R3C2" class="p03" onclick="getId(this.id)"></div>
+            <div id="p13R3C3" class="p03" onclick="getId(this.id)"></div>
+        </div>
+    </div>
+</body>
+<script>
+var eLId;//id of clicked element
+var id;
+var j = '<svg height="300" width="300" style="margin-top: 8px;"><line x1="0" y1="0" x2="100" y2="100" style="stroke: #e2e2d3;stroke-width: 11px;"></line><line x1="100" y1="0" x2="0" y2="100" style="stroke: #e2e2d3;stroke-width: 11px;"></line></svg>';
+const cross = "x";
+const zero = "o";
+var blocks = {
+    "id": ["#p1R1C1", "#p1R1C2", "#p13R1C3", "#p1R2C1", "#p1R2C2", "#p13R2C3", "#p1R3C1", "#p1R3C2", "#p13R3C3"],
+    "clicked":[],
+    "cross":[],
+    "zero":[]
+};
+var turn = cross;//set the starting turn to cross
+
+function getId(eLId) {
+    console.log(eLId);
+    id = '#' + eLId;
+    document.querySelector(id).style.border = "1px solid blue";
+    // switch the turn
+    if(turnCheckRun()==true){
+        if (turn == cross) {
+            turn = zero;
+        } else {
+            turn = cross;
+        }
+    }
+}
+
+function addCircle() {
+    document.querySelector(id).innerHTML = '<span class="dot"></span>';
+    blocks.clicked.push(this.id);
+    blocks.zero.push(this.id);
+}
+
+function addCross() {
+    document.querySelector(id).innerHTML = j;
+    blocks.clicked.push(this.id);
+    blocks.cross.push(this.id);
+}
+
+function turnCheckRun() {
+    for(let i=0;i<blocks.id.length;i++){
+        if(this.id==blocks.clicked[i]){
+            return false;
+        }
+    }
+    if (turn == cross) {
+        addCross();
+    }
+    if (turn == zero) {
+        addCircle();
+    }
+    return true;
+}
+
+</script>
+
+</html>
